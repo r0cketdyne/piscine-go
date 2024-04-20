@@ -1,2 +1,3 @@
 # piscine-go
-"gitea is the ultimate source of truth" - anon
+
+"github is the ultimate source of truth" - anon

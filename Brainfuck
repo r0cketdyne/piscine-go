@@ -1,0 +1,76 @@
+package main
+
+import(
+  "os"
+  
+  "github.com/01-edu/z01"
+)
+
+func main(){
+  if len(os.Args) > 1{
+    if len(os.Args[1])<=4096{
+      oper := os.Args[1]
+      bytes := make([]byte, 2048)
+      for i:= range bytes{
+        bytes[i] = 0
+      }
+      counter:=0
+      loops:=[]int{}
+      pointer:=0
+      i:=0
+      myRunes := []rune{}
+      for i < len(oper) {
+        o:=oper[i]
+        if o == '>' {
+          pointer+=1
+          if pointer > 2047{
+            pointer = 0
+          }
+        }
+        if o == '<' {
+          pointer-=1
+          if pointer < 0{
+            pointer = 2047
+          }
+        }
+        if o == '+' {
+          bytes[pointer]+=1
+        }
+        if o == '-' {
+          bytes[pointer]-=1
+        }
+        if o == '.' {
+          myRunes = append(myRunes, rune(bytes[pointer]))
+        }
+        if o == '[' {
+          loops = append(loops, i)
+          counter += 1
+          if bytes[pointer] == 0 {
+            loops = loops[0:len(loops)-1]
+            counter--
+            for j:=i+1; j<len(oper); j++{
+              if oper[j] == ']'{
+                i=j
+              }
+            }
+          }
+        }
+        if o == ']'{
+          if len(loops) < 1 {
+            return
+          }
+          if bytes[pointer] != 0 {
+            i=loops[counter-1]
+          } else {
+            loops = loops[0:len(loops)-1]
+            counter--
+          }
+        }
+        i = i + 1
+      }
+      for _,i := range myRunes {
+        z01.PrintRune(i)
+      }
+    }
+  }
+}

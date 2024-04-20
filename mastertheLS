@@ -1,0 +1,5 @@
+ls -At | grep -vE "^\.|^\.\.$" | sed 's/$//' | tr '\n' ',' | sed 's/,$//'
+#At: Sorts files by access time in descending order. grep -vE: Selects lines that do not match the provided pattern using extended regular expressions. 
+#sed 's/$//': deletes the end of line
+#tr '\n' ',': Translates newline characters (\n) to commas (,).
+#sed 's/,$//': Removes the trailing comma (,) at the end of the output.
